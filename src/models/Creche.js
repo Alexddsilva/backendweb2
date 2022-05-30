@@ -23,18 +23,24 @@ const Creche = database.define(
   }
 );
 
-Administrador.belongsTo(Creche, {
-  constraints: true,
-  foreignKey: "id_usuario_tipo",
-});
-
 Diretor.belongsTo(Creche, {
   constraints: true,
-  foreignKey: "id_usuario_tipo",
+  foreignKey: "id_creche",
 });
 
-Crianca.belongsTo(Creche);
+Creche.hasMany(Diretor, {
+  constraints: true,
+  foreignKey: "id_creche",
+});
 
-Creche.hasMany(Crianca);
+Crianca.belongsTo(Creche, {
+  constraints: true,
+  foreignKey: "id_creche",
+});
+
+Creche.hasMany(Crianca, {
+  constraints: true,
+  foreignKey: "id_creche",
+});
 
 module.exports = Creche;

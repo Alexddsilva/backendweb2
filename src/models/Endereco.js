@@ -40,7 +40,10 @@ const Endereco = database.define(
 
 ComprovanteEndereco.belongsTo(Endereco);
 
-Endereco.hasMany(ComprovanteEndereco);
+Endereco.hasMany(ComprovanteEndereco, {
+  constraints: true,
+  foreignKey: "id_endereco",
+});
 
 Pais.belongsTo(Endereco);
 

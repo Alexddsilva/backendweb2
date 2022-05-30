@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const database = require("../connection");
+const UsuarioTipo = require("./UsuarioTipo");
 
 const Administrador = database.define(
   "administrador",
@@ -24,5 +25,15 @@ const Administrador = database.define(
     underscored: true,
   }
 );
+
+UsuarioTipo.hasMany(Administrador, {
+  constraints: true,
+  foreignKey: "id_usuario_tipo",
+});
+
+Administrador.belongsTo(UsuarioTipo, {
+  constraints: true,
+  foreignKey: "id_usuario_tipo",
+});
 
 module.exports = Administrador;

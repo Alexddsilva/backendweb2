@@ -1,11 +1,15 @@
-const UsuarioTipo = require("./models/UsuarioTipo");
-const Pais = require("./models/Pais");
-const Administrador = require("./models/Administrador");
-const Endereco = require("./models/Endereco");
-const Crianca = require("./models/Crianca");
-const Creche = require("./models/Creche");
-const ComprovanteEndereco = require("./models/ComprovanteEndereco");
+const express = require("express");
+const sequelize = require("./connection");
+const routes = require("./routes");
 
-const database = require("./connection");
+// sequelize.sync({ force: true });
 
-database.sync({ force: true });
+const app = express();
+
+app.use(express.json());
+
+app.use(routes);
+
+const PORT = 3333;
+
+app.listen(PORT, () => console.log(`Servidor iniciado na porta ${PORT}`));
