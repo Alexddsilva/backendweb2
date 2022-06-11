@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const database = require("../connection");
 
-const Crianca = database.define(
-  "crianca",
+const UsuarioAutenticacao = database.define(
+  "usuario_autenticacao",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -10,20 +10,14 @@ const Crianca = database.define(
       allowNull: false,
       primaryKey: true,
     },
-    nome: {
+    token: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    rg: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
     },
   },
   {
-    tableName: "crianca",
-    underscored: true,
+    tableName: "usuario_autenticacao",
   }
 );
 
-module.exports = Crianca;
+module.exports = UsuarioAutenticacao;

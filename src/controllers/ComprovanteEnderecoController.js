@@ -32,7 +32,11 @@ const ComprovanteEnderecoController = {
   delete: async (request, response) => {
     const { id } = request.params;
     try {
-      const deletedComprovante = await ComprovanteEndereco.destroy(id);
+      const deletedComprovante = await ComprovanteEndereco.destroy({
+        where: {
+          id,
+        },
+      });
       return response.status(200).json(deletedComprovante);
     } catch (error) {
       return response.status(400).json({ error: error.message });

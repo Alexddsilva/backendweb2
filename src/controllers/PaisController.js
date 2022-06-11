@@ -7,15 +7,6 @@ const PaisController = {
 
     return response.status(200).json(pais);
   },
-  create: async (request, response) => {
-    const pais = request.body;
-    try {
-      const newPais = await Pais.create(pais);
-      return response.status(201).json(newPais);
-    } catch (error) {
-      return response.status(400).json({ error: error.message });
-    }
-  },
   edit: async (request, response) => {
     const attPais = request.body;
     try {
@@ -28,7 +19,11 @@ const PaisController = {
   delete: async (request, response) => {
     const { id } = request.params;
     try {
-      const deletedPais = await Pais.destroy(id);
+      const deletedPais = await Pais.destroy({
+        where: {
+          id,
+        },
+      });
       return response.status(200).json(deletedPais);
     } catch (error) {
       return response.status(400).json({ error: error.message });

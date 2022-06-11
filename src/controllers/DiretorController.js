@@ -1,22 +1,11 @@
 const Diretor = require("../models/Diretor");
 
-Diretor;
-
 const DiretorController = {
   findOne: async (request, response) => {
     const { id } = request.params;
     const diretor = await Diretor.findByPk(id);
 
     return response.status(200).json(diretor);
-  },
-  create: async (request, response) => {
-    const diretor = request.body;
-    try {
-      const newDiretor = await Diretor.create(diretor);
-      return response.status(201).json(newDiretor);
-    } catch (error) {
-      return response.status(400).json({ error: error.message });
-    }
   },
   edit: async (request, response) => {
     const attDiretor = request.body;
@@ -30,7 +19,11 @@ const DiretorController = {
   delete: async (request, response) => {
     const { id } = request.params;
     try {
-      const deletedDiretor = await Diretor.destroy(id);
+      const deletedDiretor = await Diretor.destroy({
+        where: {
+          id,
+        },
+      });
       return response.status(200).json(deletedDiretor);
     } catch (error) {
       return response.status(400).json({ error: error.message });

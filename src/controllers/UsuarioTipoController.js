@@ -8,10 +8,19 @@ const UsuarioTipoController = {
     return response.status(200).json(usuarioTipo);
   },
   create: async (request, response) => {
-    const usuarioTipo = request.body;
     try {
-      const newUsuarioTipo = await UsuarioTipo.create(usuarioTipo);
-      return response.status(201).json(newUsuarioTipo);
+      await UsuarioTipo.create({
+        descricao: "ADMINISTRADOR",
+      });
+      await UsuarioTipo.create({
+        descricao: "DIRETOR",
+      });
+      await UsuarioTipo.create({
+        descricao: "PAIS",
+      });
+      const usuariosCriados = await UsuarioTipo.findAll();
+
+      return response.status(201).json({ usuariosCriados });
     } catch (error) {
       return response.status(400).json({ error: error.message });
     }
@@ -28,7 +37,11 @@ const UsuarioTipoController = {
   delete: async (request, response) => {
     const { id } = request.params;
     try {
-      const deletedUsuarioTipo = await Pais.destroy(id);
+      const deletedUsuarioTipo = await Pais.destroy({
+        where: {
+          id,
+        },
+      });
       return response.status(200).json(deletedUsuarioTipo);
     } catch (error) {
       return response.status(400).json({ error: error.message });

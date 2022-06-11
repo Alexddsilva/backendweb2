@@ -28,8 +28,20 @@ const CrecheController = {
   delete: async (request, response) => {
     const { id } = request.params;
     try {
-      const deletedCreche = await Creche.destroy(id);
+      const deletedCreche = await Creche.destroy({
+        where: {
+          id,
+        },
+      });
       return response.status(200).json(deletedCreche);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
+    }
+  },
+  findAll: async (_, response) => {
+    try {
+      const creches = await Creche.findAll();
+      return response.status(200).json({ creches });
     } catch (error) {
       return response.status(400).json({ error: error.message });
     }

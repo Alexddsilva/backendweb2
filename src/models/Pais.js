@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const database = require("../connection");
 const Crianca = require("./Crianca");
+const Usuario = require("./Usuario");
 
 const Pais = database.define(
   "pais",
@@ -10,19 +11,6 @@ const Pais = database.define(
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
-    },
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    senha: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    cpf: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
     },
   },
   {
@@ -34,6 +22,11 @@ const Pais = database.define(
 Crianca.belongsTo(Pais, {
   constraints: true,
   foreignKey: "id_pais",
+});
+
+Pais.belongsTo(Usuario, {
+  constraints: true,
+  foreignKey: "id_usuario",
 });
 
 module.exports = Pais;

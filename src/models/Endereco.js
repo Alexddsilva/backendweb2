@@ -2,6 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const database = require("../connection");
 const ComprovanteEndereco = require("./ComprovanteEndereco");
 const Pais = require("./Pais");
+const Usuario = require("./Usuario");
 
 const Endereco = database.define(
   "endereco",
@@ -45,6 +46,9 @@ Endereco.hasMany(ComprovanteEndereco, {
   foreignKey: "id_endereco",
 });
 
-Pais.belongsTo(Endereco);
+Usuario.belongsTo(Endereco, {
+  constraints: true,
+  foreignKey: "id_endereco",
+});
 
 module.exports = Endereco;

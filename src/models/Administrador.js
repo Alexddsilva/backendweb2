@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const database = require("../connection");
-const UsuarioTipo = require("./UsuarioTipo");
+const Usuario = require("./Usuario");
 
 const Administrador = database.define(
   "administrador",
@@ -11,14 +11,6 @@ const Administrador = database.define(
       allowNull: false,
       primaryKey: true,
     },
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    senha: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
   },
   {
     tableName: "administrador",
@@ -26,14 +18,9 @@ const Administrador = database.define(
   }
 );
 
-UsuarioTipo.hasMany(Administrador, {
+Administrador.belongsTo(Usuario, {
   constraints: true,
-  foreignKey: "id_usuario_tipo",
-});
-
-Administrador.belongsTo(UsuarioTipo, {
-  constraints: true,
-  foreignKey: "id_usuario_tipo",
+  foreignKey: "id_usuario",
 });
 
 module.exports = Administrador;

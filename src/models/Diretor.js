@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const database = require("../connection");
-const UsuarioTipo = require("./UsuarioTipo");
+const Usuario = require("./Usuario");
 
 const Diretor = database.define(
   "diretor",
@@ -11,19 +11,6 @@ const Diretor = database.define(
       allowNull: false,
       primaryKey: true,
     },
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    senha: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    cpf: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
   },
   {
     tableName: "diretor",
@@ -31,14 +18,9 @@ const Diretor = database.define(
   }
 );
 
-Diretor.belongsTo(UsuarioTipo, {
+Diretor.belongsTo(Usuario, {
   constraints: true,
-  foreignKey: "id_usuario_tipo",
-});
-
-UsuarioTipo.hasMany(Diretor, {
-  constraints: true,
-  foreignKey: "id_usuario_tipo",
+  foreignKey: "id_usuario",
 });
 
 module.exports = Diretor;

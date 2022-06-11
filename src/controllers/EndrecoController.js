@@ -28,7 +28,11 @@ const EnderecoController = {
   delete: async (request, response) => {
     const { id } = request.params;
     try {
-      const deletedEndereco = await Endereco.destroy(id);
+      const deletedEndereco = await Endereco.destroy({
+        where: {
+          id,
+        },
+      });
       return response.status(200).json(deletedEndereco);
     } catch (error) {
       return response.status(400).json({ error: error.message });

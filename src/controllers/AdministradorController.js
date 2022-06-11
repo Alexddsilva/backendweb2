@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const Administrador = require("../models/Administrador");
 
 const AdministradorController = {
@@ -6,17 +5,7 @@ const AdministradorController = {
     const { id } = request.params;
     const administrador = await Administrador.findByPk(id);
 
-    return response.status(200).json(administrador);
-  },
-  create: async (request, response) => {
-    const administrador = request.body;
-    console.log("administrador: ", request.body);
-    try {
-      const newAdministrador = await Administrador.create(administrador);
-      return response.status(201).json(newAdministrador);
-    } catch (error) {
-      return response.status(400).json({ error: error.message });
-    }
+    return response.status(201).json(administrador);
   },
   edit: async (request, response) => {
     const attAdministrador = request.body;
@@ -31,8 +20,12 @@ const AdministradorController = {
   delete: async (request, response) => {
     const { id } = request.params;
     try {
-      const deletedAdmin = await Administrador.destroy(id);
-      return response.status(200).json(deletedAdmin);
+      await Administrador.destroy({
+        where: {
+          id,
+        },
+      });
+      return response.status(204).send();
     } catch (error) {
       return response.status(400).json({ error: error.message });
     }
