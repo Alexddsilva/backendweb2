@@ -2,7 +2,7 @@ const express = require("express");
 const sequelize = require("./connection");
 const routes = require("./routes");
 
-// sequelize.sync({ force: true });
+sequelize.sync({ force: true });
 
 const app = express();
 

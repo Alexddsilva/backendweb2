@@ -16,6 +16,24 @@ const UsuarioTipoController = {
       return response.status(400).json({ error: error.message });
     }
   },
+  edit: async (request, response) => {
+    const attUsuarioTipo = request.body;
+    try {
+      const updateUsuarioTipo = await Pais.update(attUsuarioTipo);
+      return response.status(200).json(updateUsuarioTipo);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
+    }
+  },
+  delete: async (request, response) => {
+    const { id } = request.params;
+    try {
+      const deletedUsuarioTipo = await Pais.destroy(id);
+      return response.status(200).json(deletedUsuarioTipo);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
+    }
+  },
 };
 
 module.exports = UsuarioTipoController;
