@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const TOKEN_SECRET = "12345";
 
 const criarToken = (payload) => {
-  const token = jwt.sign(payload, TOKEN_SECRET, { expiresIn: 300 });
+  const token = jwt.sign(payload, TOKEN_SECRET);
 
   UsuarioAutenticacao.create({
     token,

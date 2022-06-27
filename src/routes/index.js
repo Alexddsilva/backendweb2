@@ -10,7 +10,6 @@ const UsuarioTipoController = require("../controllers/UsuarioTipoController");
 const UsuarioAutenticacaoController = require("../controllers/UsuarioAutenticacaoController");
 const UsuarioController = require("../controllers/UsuarioController");
 const middlewareCrianca = require("../middlewares/middlewareCrianca");
-const middlewareAdministrador = require("../middlewares/middlewareAdministrador");
 
 const routes = express.Router();
 

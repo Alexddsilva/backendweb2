@@ -1,4 +1,6 @@
 const Creche = require("../models/Creche");
+const Endereco = require("../models/Endereco");
+const utils = require("../utils/jwtUtils");
 
 const CrecheController = {
   findOne: async (request, response) => {
@@ -8,10 +10,24 @@ const CrecheController = {
     return response.status(200).json(creche);
   },
   create: async (request, response) => {
-    const creche = request.body;
+    const { creche, endereco } = request.body;
     try {
+      const newEndereco = await Endereco.create(endereco);
       const newCreche = await Creche.create(creche);
-      return response.status(201).json(newCreche);
+      Creche.update(
+        {
+          id_endereco: newEndereco.getDataValue("id"),
+        },
+        {
+          where: {
+            id: newCreche.getDataValue("id"),
+          },
+        }
+      );
+
+      newCreche.id_endereco = newEndereco.getDataValue("id");
+
+      return response.status(201).json({ ...newCreche.dataValues });
     } catch (error) {
       return response.status(400).json({ error: error.message });
     }
@@ -38,7 +54,14 @@ const CrecheController = {
       return response.status(400).json({ error: error.message });
     }
   },
-  findAll: async (_, response) => {
+  findAll: async (request, response) => {
+    const {
+      headers: { authorization },
+    } = request;
+
+    const { id } = utils.verify(authorization);
+
+    console.log("");
     try {
       const creches = await Creche.findAll();
       return response.status(200).json({ creches });

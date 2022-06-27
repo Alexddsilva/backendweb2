@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const database = require("../connection");
 const ComprovanteEndereco = require("./ComprovanteEndereco");
+const Creche = require("./Creche");
 const Pais = require("./Pais");
 const Usuario = require("./Usuario");
 
@@ -19,7 +20,7 @@ const Endereco = database.define(
     },
     complemento: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     bairro: {
       type: DataTypes.STRING,
@@ -42,6 +43,11 @@ const Endereco = database.define(
 ComprovanteEndereco.belongsTo(Endereco);
 
 Endereco.hasMany(ComprovanteEndereco, {
+  constraints: true,
+  foreignKey: "id_endereco",
+});
+
+Endereco.hasMany(Creche, {
   constraints: true,
   foreignKey: "id_endereco",
 });
